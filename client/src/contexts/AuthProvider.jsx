@@ -5,7 +5,7 @@ const AuthContext = React.createContext()
 export const useAuth = () => React.useContext(AuthContext)
 
 export default function AuthProvider({children}) {
-    const [auth, setAuth] = React.useState(true)
+    const [auth, setAuth] = React.useState(false)
 
     return (
         <AuthContext.Provider value={{auth, setAuth}}>

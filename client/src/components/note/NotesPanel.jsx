@@ -12,7 +12,7 @@ export default function NotesPanel() {
                 </h2>
             </div>
             <div className="grid grid-cols-1 gap-4 py-4">
-                <div className="flex flex-cols justify-between bg-back-100 p-4 rounded-md ">
+                <div className="flex flex-cols justify-between items-center bg-back-100 p-4 rounded-md ">
                     <h2>Title</h2>
                     <p>Description</p>
                     <div>
