@@ -7,6 +7,8 @@ import LoginPage from './pages/auth/LoginPage.jsx'
 import Signup from './pages/auth/Signup.jsx'
 import PrivateRoute from './routes/PrivateRoute.jsx'
 import NotePage from './pages/note/NotePage.jsx'
+import NoteModal from './components/note/NoteModal.jsx'
+import HomePage from './pages/note/HomePage.jsx'
 
 export default function App() {
     const {auth} = useAuth()
@@ -21,7 +23,10 @@ export default function App() {
             </Route>
 
             <Route element={<PrivateRoute />}>
-                <Route path="/notes" element={<NotePage />} />
+                <Route path="/notes" element={<NotePage />}>
+                    <Route path="" element={<HomePage />} />
+                    <Route path=":id" element={<NoteModal />} />
+                </Route>
             </Route>
         </Routes>
     )

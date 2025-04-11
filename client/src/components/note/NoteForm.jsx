@@ -20,7 +20,7 @@ export default function NoteForm() {
                     id=""
                     placeholder="Description"></textarea>
             </div>
-            <button className="my-3 py-2 px-4 bg-font-800 rounded-md text-sm text-back-100">
+            <button className="my-3 py-2 px-4 bg-font-800 rounded-md text-sm cursor-pointer text-back-100">
                 Submit
             </button>
         </form>
