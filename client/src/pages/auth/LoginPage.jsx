@@ -61,7 +61,7 @@ export default function LoginPage() {
                 />
             </div>
             <button
-                className={`mt-8 mb-4 py-2 px-4 text-back-100 bg-font-800 rounded-md cursor-pointer ${
+                className={`mt-8 mb-4 py-2 px-4 rounded-md cursor-pointer ${
                     isValid
                         ? 'text-back-100 bg-font-800 cursor-pointer'
                         : 'bg-gray-400 text-gray-200 cursor-not-allowed'
