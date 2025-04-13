@@ -1,9 +1,14 @@
-import React from 'react'
 import {useAuth} from '../contexts/AuthProvider'
-import {Navigate, Outlet} from 'react-router-dom'
+import {Outlet, Navigate} from 'react-router-dom'
+import axios from 'axios'
+import {useEffect} from 'react'
+
+axios.defaults.withCredentials = true
 
 export default function AuthRoute() {
-    const {auth} = useAuth()
+    const {auth, loading} = useAuth()
+
+    if (loading) return <h1>Loading...</h1>
 
     return !auth ? <Outlet /> : <Navigate to="/notes" />
 }

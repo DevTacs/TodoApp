@@ -1,5 +1,5 @@
-import NoteForm from '../../components/note/NoteForm'
-import NotesPanel from '../../components/note/NotesPanel'
+import NoteForm from '../../components/notes/NoteForm'
+import NotesPanel from '../../components/notes/NotesPanel'
 
 export default function HomePage() {
     return (

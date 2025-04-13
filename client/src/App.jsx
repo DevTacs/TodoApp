@@ -7,12 +7,10 @@ import LoginPage from './pages/auth/LoginPage.jsx'
 import Signup from './pages/auth/Signup.jsx'
 import PrivateRoute from './routes/PrivateRoute.jsx'
 import NotePage from './pages/note/NotePage.jsx'
-import NoteModal from './components/note/NoteModal.jsx'
+import NoteModal from './components/notes/NoteModal.jsx'
 import HomePage from './pages/note/HomePage.jsx'
 
 export default function App() {
-    const {auth} = useAuth()
-    console.log(auth)
     return (
         <Routes>
             <Route element={<AuthRoute />}>

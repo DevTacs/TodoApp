@@ -1,28 +1,53 @@
+import useLoginForm from '../../hooks/useLoginForm'
+import {useAuth} from '../../contexts/AuthProvider'
 import {Link} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
-import {zodResolver} from '@hookform/resolvers/zod'
-import zod from 'zod'
+import Swal from 'sweetalert2'
+import DisplayError from '../../components/DisplayError'
+import Input from '../../components/forms/Input'
+import axios from 'axios'
 
-const loginSchema = zod.object({
-    username: zod
-        .string()
-        .min(5, {message: 'Username must be at least 5 characters'}),
-    password: zod
-        .string()
-        .min(5, {message: 'Password must be at least 5 characters'}),
-})
+axios.defaults.withCredentials = true
 
 export default function LoginPage() {
     const {
         register,
+        reset,
         handleSubmit,
         formState: {errors, isValid},
-    } = useForm({
-        resolver: zodResolver(loginSchema),
-    })
+    } = useLoginForm()
+    const {setAuth, setUser} = useAuth()
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:3000/auth/login`,
+                data
+            )
+
+            const {id, username} = response.data
+            setUser({id, username})
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Login successful',
+                text: 'You are now logged in',
+                showConfirmButton: false,
+                timer: 1500,
+            })
+            setAuth(true)
+        } catch (error) {
+            const errorMessage =
+                error.response.data.message || 'Something went wrong'
+            await Swal.fire({
+                icon: 'error',
+                title: 'Login failed',
+                text: errorMessage,
+                showConfirmButton: false,
+                timer: 1500,
+            })
+            reset()
+            setAuth(false)
+        }
     }
 
     return (
@@ -33,32 +58,16 @@ export default function LoginPage() {
             <div className="flex flex-col">
                 <label htmlFor="username">Username</label>
                 {errors.username && (
-                    <div className="text-xs text-red-600">
-                        {errors.username.message}
-                    </div>
+                    <DisplayError error={errors.username.message} />
                 )}
-                <input
-                    {...register('username')}
-                    className="py-1.5 px-4 my-2 rounded-md text-sm outline-0 border-1 placeholder-font-800 border-font-800"
-                    type="text"
-                    placeholder="Enter your username"
-                />
+                <Input register={register} name="username" type="text" />
             </div>
             <div className="flex flex-col">
                 <label htmlFor="password">Password</label>
                 {errors.password && (
-                    <div className="text-xs text-red-600">
-                        {errors.password.message}
-                    </div>
+                    <DisplayError error={errors.password.message} />
                 )}
-                <input
-                    {...register('password')}
-                    className="py-1.5 px-4 my-2 rounded-md text-sm outline-0 border-1 placeholder-font-800 border-font-800"
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Enter your password"
-                />
+                <Input register={register} name="password" type="password" />
             </div>
             <button
                 className={`mt-8 mb-4 py-2 px-4 rounded-md cursor-pointer ${
